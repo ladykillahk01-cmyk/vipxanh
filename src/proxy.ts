@@ -83,7 +83,7 @@ export const proxy = async (req: NextRequest) => {
     const ua = req.headers.get('user-agent');
     const { pathname } = req.nextUrl;
 
-    const ip = req.headers.get('cf-connecting-ip') || req.headers.get('x-nf-client-connection-ip') || req.headers.get('x-forwarded-for')?.split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown';
+    const ip = req.headers.get('cf-connecting-ip') || req.headers.get('x-nf-client-connection-ip') || req.headers.get('x-vercel-forwarded-for') || req.headers.get('x-forwarded-for')?.split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown';
 
     if (!ua || BLOCKED_UA_REGEX.test(ua)) {
         return new NextResponse(null, { status: 404 });
